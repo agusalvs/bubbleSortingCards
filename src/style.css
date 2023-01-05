@@ -9,20 +9,19 @@ body {
 .card {
   background: rgba(255, 255, 255);
   box-sizing: border-box;
-  font-style: oblique;
 }
 
 .top {
   text-align: left;
-  font-size: 80px;
+  font-size: 40px;
 }
 
 .number {
   text-align: center;
-  font-size: 80px;
+  font-size: 40px;
 }
 
 .bottom {
-  font-size: 80px;
+  font-size: 40px;
   transform: rotate(180deg);
 }
