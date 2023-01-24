@@ -81,38 +81,52 @@ window.onload = function() {
         let top = document.getElementById("top");
         let number = document.getElementById("number");
         let bottom = document.getElementById("bottom");
-
-        if (palos[indexPalo] === "♦" || palos[indexPalo] === "♥") {
+        if (indexPalo === 0 || indexPalo === 1) {
           document.getElementById(
             "hasCards"
-          ).innerHTML += `<div class="card col-4" style="width: 12rem; height: 16rem;">
-                          <div class="card-body">
-                            <div class="top text-danger">${palos[indexPalo]}</div> <div class="number text-danger">${numbers[indexNum]}</div> <div class="bottom text-danger">${palos[indexPalo]}</div>
-                            </div>
-                          </div>`;
+          ).innerHTML += `<div class="card m-2" style="width: 5rem; heigth:8rem">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item text-danger border-0 p-0" id="top">${palos[indexPalo]}</li>
+              <li class="list-group-item text-danger border-0 p-0 display-6 text-center" id="number">${numbers[indexNum]}</li>
+              <li class="list-group-item text-danger border-0 p-0" style="transform: rotate(180deg)" id="bottom">${palos[indexPalo]}</li>
+            </ul>
+          </div>`;
         } else {
           document.getElementById(
             "hasCards"
-          ).innerHTML += `<div class="card col-4" style="width: 12rem; height: 16rem;">
-            <div class="card-body">
-              <div class="top">${palos[indexPalo]}</div> <div class="number">${numbers[indexNum]}</div> <div class="bottom">${palos[indexPalo]}</div>
-            </div>
-          </div>`;
+          ).innerHTML += `<div class="card m-2" style="width: 5rem; heigth:8rem">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item border-0 p-0" id="top">${palos[indexPalo]}</li>
+          <li class="list-group-item border-0 p-0 display-6 text-center" id="number">${numbers[indexNum]}</li>
+          <li class="list-group-item border-0 p-0" style="transform: rotate(180deg)" id="bottom">${palos[indexPalo]}</li>
+        </ul>
+      </div>`;
         }
       }
     }
+    return sort;
   }
-  const element2 = document.getElementById("sortButton");
-  element2.addEventListener("click", sortCards);
+  // aca se debe retornar el array que contiene los valores de las caryas generadas, que es el declararon arriba: sort
+
+  const elementv2 = document.getElementById("sortButton");
+  // elementv2.addEventListener("click", sortCards);
+  elementv2.addEventListener("click", function() {
+    sortCards([sort]);
+  });
 
   function sortCards(sort) {
-    console.log(sort);
-    let wall = sort.length - 1; //we start the wall at the end of the sort array
+    sort = sort[0];
+    let wall = sort.length - 1; //we start the wall at the end of the sortay
+    document.getElementById("hasCards").innerHTML = ``;
     while (wall > 0) {
       let index = 0;
       while (index < wall) {
-        //compare the adjacent positions, if the right one is bigger, we have to swap
-        if (sort[index[2]] > sort[(index + 1)[2]]) {
+        // extraemos los valores a comparar
+        let thing1 = sort[index];
+        let thing2 = sort[index + 1];
+
+        // acá es donde las burbujitas suben
+        if (parseInt(thing1[2]) > parseInt(thing2[2])) {
           let aux = sort[index];
           sort[index] = sort[index + 1];
           sort[index + 1] = aux;
@@ -121,7 +135,36 @@ window.onload = function() {
       }
       wall--; //decrease the wall
     }
-    console.log(sort);
-    return sortCards;
+    while (sort.length > 0) {
+      // Quitamos la primer carta
+      let oneCard = sort[0];
+      sort.shift();
+      // Ahora ponemos las cartitas en la pantalla
+      let top = document.getElementById("top");
+      let number = document.getElementById("number");
+      let bottom = document.getElementById("bottom");
+      let suits = oneCard[0];
+      if (suits[0] === "♦" || suits[0] === "♥") {
+        document.getElementById(
+          "hasCards"
+        ).innerHTML += `<div class="card m-2" style="width: 5rem;">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item text-danger border-0 p-0" id="top">${oneCard[0]}</li>
+              <li class="list-group-item text-danger border-0 p-0 display-6 text-center" id="number">${oneCard[1]}</li>
+              <li class="list-group-item text-danger border-0 p-0" style="transform: rotate(180deg)" id="bottom">${oneCard[0]}</li>
+            </ul>
+          </div>`;
+      } else {
+        document.getElementById(
+          "hasCards"
+        ).innerHTML += `<div class="card m-2" style="width: 5rem;">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item border-0 p-0" id="top">${oneCard[0]}</li>
+          <li class="list-group-item border-0 p-0 display-6 text-center" id="number">${oneCard[1]}</li>
+          <li class="list-group-item border-0 p-0" style="transform: rotate(180deg)" id="bottom">${oneCard[0]}</li>
+        </ul>
+      </div>`;
+      }
+    }
   }
 };
